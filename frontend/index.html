@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atrium</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+
+    <header class="site-header">
+      <a href="index.html" class="site-title">Atrium</a>
+      <div class="site-tagline">A quiet space for students to share what they know.</div>
+      <nav class="site-nav">
+        <a href="index.html">Recent</a>
+        <a href="professors.html">Professors</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2 class="section-title">Recent insights</h2>
+      <p class="section-subtitle">
+        The latest contributions from students, across all professors and courses.
+      </p>
+
+      <div id="insights-container">
+        <div class="loading">Loading recent insights…</div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      Atrium · Built for students, by students. All data shown is fictional.
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    // On the landing page, load and render recent insights.
+    document.addEventListener('DOMContentLoaded', () => {
+      Atrium.renderRecentInsights('insights-container');
+    });
+  </script>
+</body>
+</html>
