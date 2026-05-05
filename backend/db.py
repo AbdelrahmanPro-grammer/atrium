@@ -11,10 +11,25 @@ from pathlib import Path
 from typing import Optional
 
 
-# The database file lives one level up from this file (in /atrium/atrium.db).
-# Using a Path object keeps this OS-agnostic (works on Windows, Mac, Linux).
-DB_PATH = Path(__file__).parent.parent / "atrium.db"
+# Default location of the database. Tests override this via set_db_path().
+_DEFAULT_DB_PATH = Path(__file__).parent.parent / "atrium.db"
+DB_PATH = _DEFAULT_DB_PATH
 SCHEMA_PATH = Path(__file__).parent / "schema.sql"
+
+
+def set_db_path(path: Path) -> None:
+    """
+    Override the database path. Used by tests to point at a temporary database.
+    Production code should never call this.
+    """
+    global DB_PATH
+    DB_PATH = path
+
+
+def reset_db_path() -> None:
+    """Restore the default database path. Called by tests during teardown."""
+    global DB_PATH
+    DB_PATH = _DEFAULT_DB_PATH
 
 
 def get_connection() -> sqlite3.Connection:
@@ -143,7 +158,7 @@ def get_insights_for_professor(professor_id: int) -> list[dict]:
             FROM insights i
             JOIN courses c ON c.id = i.course_id
             WHERE i.professor_id = ?
-            ORDER BY i.created_at DESC
+            ORDER BY i.created_at DESC, i.id DESC
             """,
             (professor_id,),
         ).fetchall()
@@ -166,7 +181,7 @@ def get_recent_insights(limit: int = 20) -> list[dict]:
             FROM insights i
             JOIN professors p ON p.id = i.professor_id
             JOIN courses    c ON c.id = i.course_id
-            ORDER BY i.created_at DESC
+            ORDER BY i.created_at DESC, i.id DESC
             LIMIT ?
             """,
             (limit,),
