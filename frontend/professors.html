@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professors · Atrium</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+
+    <header class="site-header">
+      <a href="index.html" class="site-title">Atrium</a>
+      <div class="site-tagline">A quiet space for students to share what they know.</div>
+      <nav class="site-nav">
+        <a href="index.html">Recent</a>
+        <a href="professors.html">Professors</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2 class="section-title">Browse professors</h2>
+      <p class="section-subtitle">
+        Search by name or department to find a professor and read what students have shared.
+      </p>
+
+      <input
+        type="text"
+        id="search-input"
+        class="search-input"
+        placeholder="Search by name or department…"
+        autocomplete="off"
+      />
+
+      <div id="professors-container">
+        <div class="loading">Loading professors…</div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      Atrium · Built for students, by students. All data shown is fictional.
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Atrium.renderProfessorList('professors-container', 'search-input');
+    });
+  </script>
+</body>
+</html>
